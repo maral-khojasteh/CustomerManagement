@@ -87,11 +87,8 @@ public class EditPersonServlet extends HttpServlet {
             personService.editPerson(person);
             String message = "Customer " + customerNumber + " is edited successfully";
             generateResultPage(request, response, "<h3 class='success' dir='ltr' align='center'>" + message + "</h3>", false);
-            return;
-
         }catch (SQLException e){
             generateResultPage(request, response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>", true);
-            return;
         }
     }
 

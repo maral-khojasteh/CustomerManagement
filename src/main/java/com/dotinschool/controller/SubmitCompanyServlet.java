@@ -69,10 +69,8 @@ public class SubmitCompanyServlet extends HttpServlet {
             companyService.insertCompany(company);
             String message = "Customer Saved! <br /> Customer Number: " + company.getCustomerNumber();
             generateResultPage(response, "<h3 class='success' dir='ltr' align='center'>" + message + "</h3>");
-            return;
         }catch (SQLException e){
             generateResultPage(response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>");
-            return;
         }
     }
 

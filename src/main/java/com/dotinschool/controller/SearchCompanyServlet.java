@@ -60,11 +60,9 @@ public class SearchCompanyServlet extends HttpServlet {
             }
             String html = ResultPageHTML.SEARCH_COMPANY_RESULT_PAGE_TOP + body + ResultPageHTML.SEARCH_RESULT_PAGE_BOTTOM;
             generateResultPage(response, html);
-            return;
         } catch (SQLException e) {
             String html = ResultPageHTML.RESULT_PAGE_TOP + "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>" + ResultPageHTML.RESULT_PAGE_BOTTOM;
             generateResultPage(response, html);
-            return;
         }
 
     }

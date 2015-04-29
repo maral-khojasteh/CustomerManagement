@@ -28,10 +28,8 @@ public class DeleteCompanyServlet extends HttpServlet {
         try {
             companyService.deleteCompany(new Long(id));
             generateResultPage(request, response, "<h3 class='success' dir='ltr' align='center'>Customer is deleted successfully</h3>");
-            return;
         } catch (SQLException e) {
             generateResultPage(request, response, "<h3 class='error' dir='ltr' align='center'>Internal Server Error!</h3>");
-            return;
         }
     }
     private void generateResultPage(HttpServletRequest request, HttpServletResponse response, String body) throws IOException {
