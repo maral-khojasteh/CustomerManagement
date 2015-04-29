@@ -48,6 +48,7 @@ public class CompanyDAO extends CustomerDAO {
 
     public void delete(long id) throws SQLException {
         PreparedStatement statement = null;
+        getConnection().setAutoCommit(false);
         try {
             statement = (PreparedStatement) getConnection().prepareStatement("DELETE FROM company WHERE id = ?");
             statement.setLong(1, id);
@@ -58,6 +59,7 @@ public class CompanyDAO extends CustomerDAO {
             }
         }
         super.delete(id);
+        getConnection().commit();
     }
 
     public boolean doesExistEconomicCode(String economicCode) throws SQLException {
@@ -92,15 +94,15 @@ public class CompanyDAO extends CustomerDAO {
         statement = (PreparedStatement) getConnection().prepareStatement(sqlStatement);
         if(!companyName.equals("")){
             counter +=1;
-            statement.setString(counter , companyName);
+            statement.setString(counter , "%" + companyName + "%");
         }
         if (!economicCode.equals("")){
             counter +=1;
-            statement.setString(counter , economicCode);
+            statement.setString(counter , "%" + economicCode + "%");
         }
         if(!customerNumber.equals("")){
             counter +=1;
-            statement.setString(counter , customerNumber);
+            statement.setString(counter , "%" + customerNumber + "%");
         }
         ResultSet resultSet = statement.executeQuery();
         ArrayList<Company> companies = new ArrayList<Company>();
