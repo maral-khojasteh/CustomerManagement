@@ -52,6 +52,7 @@ public class PersonDAO extends CustomerDAO {
 
     public void delete(long id) throws SQLException {
         PreparedStatement statement = null;
+        getConnection().setAutoCommit(false);
         try {
             statement = (PreparedStatement) getConnection().prepareStatement("DELETE FROM person WHERE id = ?");
             statement.setLong(1, id);
@@ -62,6 +63,7 @@ public class PersonDAO extends CustomerDAO {
             }
         }
         super.delete(id);
+        getConnection().commit();
     }
 
     public boolean doesExistNationalCode(String nationalCode) throws SQLException {
@@ -80,7 +82,6 @@ public class PersonDAO extends CustomerDAO {
     }
 
     public ArrayList<Person> find(String firstName, String lastName, String nationalCode, String customerNumber) throws SQLException {
-        //TODO replace statement with preparedStatement
         PreparedStatement statement = null;
         String sqlStatement = "SELECT p.*, c.customerNumber FROM person p INNER JOIN customer c ON p.id = c.id WHERE 1 = 1";
         int counter = 0;
@@ -99,19 +100,19 @@ public class PersonDAO extends CustomerDAO {
         statement = (PreparedStatement) getConnection().prepareStatement(sqlStatement);
         if(!firstName.equals("")){
             counter += 1;
-            statement.setString(counter, firstName);
+            statement.setString(counter, "%" + firstName + "%");
         }
         if(!lastName.equals("")){
             counter += 1;
-            statement.setString(counter, lastName);
+            statement.setString(counter, "%" + lastName + "%");
         }
         if(!nationalCode.equals("")){
             counter += 1;
-            statement.setString(counter, nationalCode);
+            statement.setString(counter, "%" + nationalCode + "%");
         }
         if(!customerNumber.equals("")){
             counter += 1;
-            statement.setString(counter, customerNumber);
+            statement.setString(counter, "%" + customerNumber + "%");
         }
         ResultSet resultSet = statement.executeQuery();
         ArrayList<Person> persons = new ArrayList<Person>();
